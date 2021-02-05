@@ -1,19 +1,20 @@
-const getRandomMinMaxInt = function (min, max) {
-  let minInt = Math.ceil(min);
-  let maxInt = Math.floor(max);
-  if (maxInt < minInt) {
-    alert('Wrong number');
-    return getRandomMinMaxInt(maxInt, minInt);
+const getRandom = function (min, max, digits) {
+  if (max < 0 || min < 0) {
+    return alert('Number < 0');
   }
-  return Math.floor(Math.random() * (maxInt - minInt + 1)) + minInt;
-}
-
-alert(getRandomMinMaxInt(0, -7));
-
-const getRandomInt = function (min, max, digits) {
+  if (max < min) {
+    alert('Wrong number');
+    return getRandom(max, min, digits);
+  }
   return (min + Math.random() * (max - min)).toFixed(digits);
 }
+alert(getRandom(1, 6));
 
-alert(getRandomInt(0.006, 0.03, 3));
+
+const getRandomInt = function (min, max) {
+  return getRandom(Math.cell(min), Math.floor(max), 0);
+}
+alert(getRandomInt(1, 6));
+
 
 
