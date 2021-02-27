@@ -48,7 +48,7 @@ const generateHomes = function (length) {
       },
       offer: {
         title: 'Home',
-        address: 'Home ' + '{{location.x}}, {{location.y}}',
+        address: `Home ${location.x}, ${location.y}`,
         price: `${getRandomInt(1, 1000000000)}`,
         type: TYPES_PLACE[getRandomInt(0, TYPES_PLACE.length - 1)],
         rooms: `${getRandomInt(1, 10)}`,
