@@ -33,8 +33,12 @@ const getRandomList = function (possibleValues) {
   return result;
 }
 
-const GenerateHomes = function (length) {
+const generateHomes = function (length) {
   let homes = [];
+  let location = {
+    x: getRandom(35.65000, 35.70000, 5),
+    y: getRandom(139.70000, 139.80000, 5),
+  }
 
   for (let i = 0; i < length; i++) {
 
@@ -55,11 +59,7 @@ const GenerateHomes = function (length) {
         description: 'Big house',
         photos: getRandomList(PHOTOS),
       },
-      location: {
-        x: getRandom(35.65000, 35.70000, 5),
-        y: getRandom(139.70000, 139.80000, 5),
-
-      },
+      location: location,
 
     }
 
@@ -69,4 +69,5 @@ const GenerateHomes = function (length) {
   return homes;
 }
 
+generateHomes(10);
 
