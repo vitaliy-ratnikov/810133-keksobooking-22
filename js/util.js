@@ -1,5 +1,3 @@
-export { getRandom, getRandomInt };
-
 const getRandom = function (min, max, digits) {
   if (max < 0 || min < 0) {
     return alert('Number < 0');
@@ -14,3 +12,5 @@ const getRandom = function (min, max, digits) {
 const getRandomInt = function (min, max) {
   return getRandom(Math.ceil(min), Math.floor(max), 0);
 }
+
+export { getRandom, getRandomInt };

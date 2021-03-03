@@ -1,5 +1,4 @@
 import { getRandom, getRandomInt } from './util.js'
-export { getRandomList, generateHomes };
 
 const TYPES_PLACE = ['palace', 'flat', 'house', 'bungalow'];
 const CHECKINS = ['12:00', '13:00', '14:00'];
@@ -56,3 +55,4 @@ const generateHomes = function (length) {
   return homes;
 }
 
+export { getRandomList, generateHomes };
