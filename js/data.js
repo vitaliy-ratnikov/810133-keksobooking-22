@@ -6,6 +6,13 @@ const CHECKOUTS = ['12:00', '13:00', '14:00'];
 const PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 const FEATURES_PLACE = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
+const typesHouses = {
+  'flat': 'Квартира',
+  'bungalo': 'Бунгало',
+  'house': 'Дом',
+  'palace': 'Дворец',
+};
+
 const getRandomList = function (possibleValues) {
   let length = getRandomInt(0, possibleValues.length - 1);
   let result = [];
@@ -55,4 +62,4 @@ const generateHomes = function (length) {
   return homes;
 }
 
-export { getRandomList, generateHomes };
+export { getRandomList, generateHomes, typesHouses };
