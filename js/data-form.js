@@ -5,8 +5,7 @@ const placesPrice = document.querySelector('#price');
 const timeCheckIn = document.querySelector('#timein');
 const timeCheckOut = document.querySelector('#timeout');
 
-placesType.addEventListener('change', (event) => {
-  event.target.value === placesType.value;
+placesType.addEventListener('change', () => {
   placesPrice.placeholder = PLACES_PRICE[placesType.value];
   placesPrice.min = PLACES_PRICE[placesType.value];
 
