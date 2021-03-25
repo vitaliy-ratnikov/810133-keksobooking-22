@@ -33,7 +33,7 @@ const getRandomList = function (possibleValues) {
   return result;
 }
 
-let generateHomes = function (length) {
+const generateHomes = function (length) {
   let homes = [];
 
 

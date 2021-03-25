@@ -1,7 +1,6 @@
 import { getBaloonContent } from './similar-data.js';
 import { generateHomes } from './data.js';
 
-let L = window.L;
 const mainForm = document.querySelector('.ad-form');
 const formElements = mainForm.querySelectorAll('fieldset');
 
@@ -9,6 +8,12 @@ const formFilter = document.querySelector('.map__filters');
 const filterFeatures = formFilter.querySelector('fieldset');
 
 const adressPosition = document.querySelector('#address');
+
+const MAP_ZOOM = 12;
+const MAP_DEFAULT = {
+  lat: 35.652832,
+  lng: 139.839478,
+};
 
 mainForm.classList.add('ad-form--disabled');
 for (let formElement of formElements) {
@@ -26,18 +31,18 @@ for (let mapSelectForm of mapSelectForms) {
 const map = L.map('map-canvas')
   .on('load', function () {
     mainForm.classList.remove('ad-form--disabled');
-    for (let formElement of formElements) {
+    for (const formElement of formElements) {
       formElement.removeAttribute('disabled', 'disabled');
     }
 
     formFilter.classList.remove('ad-form--disabled');
     filterFeatures.removeAttribute('disabled', 'disabled');
-    for (let mapSelectForm of mapSelectForms) {
+    for (const mapSelectForm of mapSelectForms) {
       mapSelectForm.removeAttribute('disabled', 'disabled');
     }
 
   })
-  .setView([35.652832, 139.839478], 13);
+  .setView([MAP_DEFAULT.lat, MAP_DEFAULT.lng], MAP_ZOOM);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -61,9 +66,8 @@ const pinMarker = L.icon({
 
 const mainMarker = L.marker(
   {
-    lat: 35.65,
-    lng: 139.78,
-    zoom: 12,
+    lat: MAP_DEFAULT.lat,
+    lng: MAP_DEFAULT.lng,
   },
   {
     draggable: true,
@@ -75,9 +79,9 @@ mainMarker.addTo(map);
 
 adressPosition.value = `${map._lastCenter.lat} и ${map._lastCenter.lng}`;
 mainMarker.on('moveend', function () {
-  let move = this.getLatLng();
-  let x = move.lng.toFixed(5);
-  let y = move.lat.toFixed(5);
+  const move = this.getLatLng();
+  const x = move.lng.toFixed(5);
+  const y = move.lat.toFixed(5);
   adressPosition.value = `${x} и ${y}`;
 });
 
@@ -86,9 +90,10 @@ mainMarker.on('moveend', function () {
 
 const similarDatas = generateHomes(3);
 
+
 similarDatas.forEach((similarData) => {
 
-  let marker = L.marker(
+  const marker = L.marker(
     {
       lat: similarData.location.x,
       lng: similarData.location.y,

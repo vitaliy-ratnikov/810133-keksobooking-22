@@ -1,10 +1,8 @@
-import { generateHomes, TYPES_HOUSES } from './data.js';
-const similarData = generateHomes(1);
+import { TYPES_HOUSES } from './data.js';
 
-const similarListFragment = document.createDocumentFragment();
 
 const getBaloonContent = function (offerData) {
-  const cardTemplate = document.querySelector('#card').content;
+  const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
   const cardElement = cardTemplate.cloneNode(true);
 
   cardElement.querySelector('.popup__title').textContent = offerData.offer.title;
@@ -19,13 +17,14 @@ const getBaloonContent = function (offerData) {
   const cardElementFeature = cardElement.querySelector('.popup__feature');
 
   offerData.offer.features.forEach((feature) => {
+    cardElementFeatures.innerHTML = '';
     const newElementFeature = cardElementFeature.cloneNode(true);
     newElementFeature.className = (`popup__feature popup__feature--${feature}`);
     cardElementFeatures.appendChild(newElementFeature);
   });
 
   cardElement.querySelector('.popup__description').textContent = offerData.offer.description;
-  
+
   const cardElementPhotos = cardElement.querySelector('.popup__photos');
   if (offerData.offer.photos.length === 0) {
     cardElementPhotos.remove();
@@ -45,8 +44,4 @@ const getBaloonContent = function (offerData) {
 };
 
 
-// const mapCanvas = document.querySelector('#map-canvas');
-// mapCanvas.appendChild(similarListFragment);
-
-
-export { similarListFragment, getBaloonContent, similarData };
+export { getBaloonContent };
