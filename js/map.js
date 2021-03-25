@@ -1,6 +1,6 @@
 import { getBaloonContent } from './similar-data.js';
 import { generateHomes } from './data.js';
-
+let L = window.L;
 const mainForm = document.querySelector('.ad-form');
 const formElements = mainForm.querySelectorAll('fieldset');
 

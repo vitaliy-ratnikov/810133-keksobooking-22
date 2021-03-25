@@ -10,4 +10,4 @@ env:
 
 extends:
   "htmlacademy/vanilla"
-global L:readonly
+
