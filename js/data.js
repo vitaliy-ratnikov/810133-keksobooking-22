@@ -1,5 +1,4 @@
 import { getRandom, getRandomInt } from './util.js'
-
 const TYPES_PLACE = ['palace', 'flat', 'house', 'bungalow'];
 const CHECKINS = ['12:00', '13:00', '14:00'];
 const CHECKOUTS = ['12:00', '13:00', '14:00'];
@@ -14,7 +13,7 @@ const PLACES_PRICE =
   'palace': 10000,
 };
 
-const typesHouses = {
+const TYPES_HOUSES = {
   'flat': 'Квартира',
   'bungalo': 'Бунгало',
   'house': 'Дом',
@@ -36,13 +35,13 @@ const getRandomList = function (possibleValues) {
 
 const generateHomes = function (length) {
   let homes = [];
-  let location = {
-    x: getRandom(35.65000, 35.70000, 5),
-    y: getRandom(139.70000, 139.80000, 5),
-  }
+
 
   for (let i = 0; i < length; i++) {
-
+    let location = {
+      x: getRandom(35.65000, 35.70000, 5),
+      y: getRandom(139.70000, 139.80000, 5),
+    }
     let dataObj = {
       autor: {
         avatar: `img/avatars/user0${getRandom(1, 8)}.png`,
@@ -70,4 +69,6 @@ const generateHomes = function (length) {
   return homes;
 }
 
-export { getRandomList, generateHomes, typesHouses, PLACES_PRICE };
+
+
+export { getRandomList, generateHomes, TYPES_HOUSES, PLACES_PRICE };

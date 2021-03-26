@@ -5,16 +5,22 @@ const placesPrice = document.querySelector('#price');
 const timeCheckIn = document.querySelector('#timein');
 const timeCheckOut = document.querySelector('#timeout');
 
-placesType.addEventListener('change', () => {
+placesType.addEventListener('change', function () {
   placesPrice.placeholder = PLACES_PRICE[placesType.value];
   placesPrice.min = PLACES_PRICE[placesType.value];
 
 });
 
-timeCheckOut.addEventListener('change', () => {
-  timeCheckIn.value = timeCheckOut.value;
+const syncCheckTime = function (selectedValue) {
+  timeCheckIn.value = selectedValue;
+  timeCheckOut.value = selectedValue;
+}
+
+timeCheckOut.addEventListener('change', function () {
+  syncCheckTime(this.value);
+
 });
 
-timeCheckIn.addEventListener('change', () => {
-  timeCheckOut.value = timeCheckIn.value;
+timeCheckIn.addEventListener('change', function () {
+  syncCheckTime(this.value);
 });
