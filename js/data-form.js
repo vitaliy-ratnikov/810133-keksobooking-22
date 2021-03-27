@@ -1,4 +1,6 @@
 import { PLACES_PRICE } from './data.js';
+import { mainMarker, map, MAP_DEFAULT, mainForm, adressPosition } from './map.js';
+import { sendData } from './api.js';
 
 const placesType = document.querySelector('#type');
 const placesPrice = document.querySelector('#price');
@@ -7,6 +9,11 @@ const timeCheckOut = document.querySelector('#timeout');
 const placeDescription = document.querySelector('#title');
 const roomNumber = document.querySelector('#room_number');
 const guestNumber = document.querySelector('#capacity');
+
+const resetButtonSuccess = document.querySelector('.ad-form__reset');
+
+const mainSendUrl = 'https://22.javascript.pages.academy/keksobooking';
+const mainPart = document.querySelector('main');
 
 const guestRoomCapacity = {
   1: ['1'],
@@ -39,7 +46,7 @@ timeCheckIn.addEventListener('change', function () {
 });
 
 
-placeDescription.addEventListener('change', function() {
+placeDescription.addEventListener('change', function () {
   const inputLength = this.value.length;
   placeDescription.setCustomValidity('');
 
@@ -54,7 +61,7 @@ placeDescription.addEventListener('change', function() {
 });
 
 
-guestNumber.addEventListener('change', function() {
+guestNumber.addEventListener('change', function () {
   const setUserChoice = this.value;
 
   guestNumber.setCustomValidity('');
@@ -66,7 +73,7 @@ guestNumber.addEventListener('change', function() {
 });
 
 
-roomNumber.addEventListener('change', function() {
+roomNumber.addEventListener('change', function () {
   const setUserChoice = this.value;
 
   roomNumber.setCustomValidity('');
@@ -77,3 +84,85 @@ roomNumber.addEventListener('change', function() {
   roomNumber.reportValidity();
 });
 
+
+
+
+const templateFormSuccess = document.querySelector('#success')
+  .content
+  .querySelector('div');
+
+const successMessage = function () {
+  const cardElement = templateFormSuccess.cloneNode(true);
+
+  mainPart.append(cardElement);
+
+  document.addEventListener('keydown', function () {
+    if (isEscEvent) {
+      cardElement.remove();
+    }
+  });
+  document.addEventListener('click', function () {
+    cardElement.remove();
+  });
+}
+
+const resetFunction = function () {
+  mainForm.reset();
+  mainMarker.setLatLng({ lat: MAP_DEFAULT.lat, lng: MAP_DEFAULT.lng });
+  map.closePopup();
+  adressPosition.value = `${map._lastCenter.lat} и ${map._lastCenter.lng}`;
+};
+
+
+
+resetButtonSuccess.addEventListener('click', function () {
+  resetFunction();
+});
+
+
+const isEscEvent = function (evt) {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
+const templateFormError = document.querySelector('#error')
+  .content
+  .querySelector('div');
+
+const errorMessage = function () {
+  const cardElement = templateFormError.cloneNode(true);
+  mainPart.append(cardElement);
+
+
+  const errorButton = cardElement.querySelector('.error__button');
+
+  errorButton.addEventListener('click', function () {
+    cardElement.remove();
+  });
+  document.addEventListener('keydown', function () {
+    if (isEscEvent) {
+      cardElement.remove();
+    }
+  });
+  document.addEventListener('click', function () {
+    cardElement.remove();
+  });
+}
+
+
+const setUserFormSubmit = function (onSuccess, onFail) {
+  mainForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    sendData(
+      mainSendUrl,
+      () => onSuccess(resetFunction()),
+      () => onFail(),
+      new FormData(evt.target),
+    );
+  });
+};
+
+setUserFormSubmit(successMessage, errorMessage);
+
+
+export { resetFunction };

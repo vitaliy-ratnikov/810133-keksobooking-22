@@ -16,7 +16,7 @@ const getBaloonContent = function (offerData) {
   const cardElementFeatures = cardElement.querySelector('.popup__features');
   const cardElementFeature = cardElement.querySelector('.popup__feature');
 
-  offerData.offer.features.forEach((feature) => {
+  offerData.offer.features.forEach(function (feature) {
     cardElementFeatures.innerHTML = '';
     const newElementFeature = cardElementFeature.cloneNode(true);
     newElementFeature.className = (`popup__feature popup__feature--${feature}`);
