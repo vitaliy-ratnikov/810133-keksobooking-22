@@ -1,10 +1,3 @@
-import { getRandom, getRandomInt } from './util.js'
-const TYPES_PLACE = ['palace', 'flat', 'house', 'bungalow'];
-const CHECKINS = ['12:00', '13:00', '14:00'];
-const CHECKOUTS = ['12:00', '13:00', '14:00'];
-const PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-const FEATURES_PLACE = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-
 const PLACES_PRICE =
 {
   'bungalow': 0,
@@ -20,55 +13,49 @@ const TYPES_HOUSES = {
   'palace': 'Дворец',
 };
 
-const getRandomList = function (possibleValues) {
-  let length = getRandomInt(0, possibleValues.length - 1);
-  let result = [];
-  while (result.length < length) {
-    let item = possibleValues[getRandomInt(0, possibleValues.length - 1)];
 
-    if (!result.includes(item)) {
-      result.push(item);
+
+const getBaloonContent = function (offerData) {
+  const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
+  const cardElement = cardTemplate.cloneNode(true);
+
+  cardElement.querySelector('.popup__title').textContent = offerData.offer.title;
+  cardElement.querySelector('.popup__text--address').textContent = offerData.offer.address;
+  cardElement.querySelector('.popup__text--price').textContent = `${offerData.offer.price} Р/ночь`;
+  cardElement.querySelector('.popup__type').textContent = TYPES_HOUSES[offerData.offer.type];
+  cardElement.querySelector('.popup__text--capacity').textContent = `${offerData.offer.rooms} комнаты для ${offerData.offer.guests} гостей.`;
+  cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${offerData.offer.checkin}, выезд до ${offerData.offer.checkout}.`;
+  cardElement.querySelector('.popup__avatar').src = offerData.author.avatar;
+
+  const cardElementFeatures = cardElement.querySelector('.popup__features');
+  const cardElementFeature = cardElement.querySelector('.popup__feature');
+
+  offerData.offer.features.forEach(function (feature) {
+    cardElementFeatures.innerHTML = '';
+    const newElementFeature = cardElementFeature.cloneNode(true);
+    newElementFeature.className = (`popup__feature popup__feature--${feature}`);
+    cardElementFeatures.appendChild(newElementFeature);
+  });
+
+  cardElement.querySelector('.popup__description').textContent = offerData.offer.description;
+
+  const cardElementPhotos = cardElement.querySelector('.popup__photos');
+  if (offerData.offer.photos.length === 0) {
+    cardElementPhotos.remove();
+  }
+  else {
+    const cardElementPhoto = cardElement.querySelector('.popup__photo');
+    cardElementPhoto.src = offerData.offer.photos[0];
+    if (offerData.offer.photos.length > 1) {
+      for (let i = 1; i < offerData.offer.photos.length; i++) {
+        const nextElementCardPhoto = cardElementPhoto.cloneNode(true);
+        nextElementCardPhoto.src = offerData.offer.photos[i];
+        cardElementPhoto.appendChild(nextElementCardPhoto);
+      }
     }
   }
-  return result;
-}
-
-const generateHomes = function (length) {
-  let homes = [];
+  return cardElement;
+};
 
 
-  for (let i = 0; i < length; i++) {
-    let location = {
-      x: getRandom(35.65000, 35.70000, 5),
-      y: getRandom(139.70000, 139.80000, 5),
-    }
-    let dataObj = {
-      autor: {
-        avatar: `img/avatars/user0${getRandom(1, 8)}.png`,
-      },
-      offer: {
-        title: 'Home',
-        address: `Home ${location.x}, ${location.y}`,
-        price: `${getRandomInt(1, 1000000000)}`,
-        type: TYPES_PLACE[getRandomInt(0, TYPES_PLACE.length - 1)],
-        rooms: `${getRandomInt(1, 10)}`,
-        guests: `${getRandomInt(1, 10)}`,
-        checkin: CHECKINS[getRandomInt(0, CHECKINS.length - 1)],
-        checkout: CHECKOUTS[getRandomInt(0, CHECKOUTS.length - 1)],
-        features: getRandomList(FEATURES_PLACE),
-        description: 'Big house',
-        photos: getRandomList(PHOTOS),
-      },
-      location: location,
-
-    }
-
-    homes.push(dataObj);
-
-  }
-  return homes;
-}
-
-
-
-export { getRandomList, generateHomes, TYPES_HOUSES, PLACES_PRICE };
+export { TYPES_HOUSES, PLACES_PRICE, getBaloonContent };

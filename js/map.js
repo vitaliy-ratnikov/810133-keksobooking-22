@@ -1,5 +1,8 @@
-import { getBaloonContent } from './similar-data.js';
-import { generateHomes } from './data.js';
+import { getBaloonContent } from './data.js';
+import { getData, sendData } from './api.js';
+import { showErrorAlert, showSuccessAlert } from './alertError.js';
+import { resetMapFilters } from './filter.js';
+
 let L = window.L;
 const mainForm = document.querySelector('.ad-form');
 const formElements = mainForm.querySelectorAll('fieldset');
@@ -85,30 +88,66 @@ mainMarker.on('moveend', function () {
   adressPosition.value = `${x} и ${y}`;
 });
 
+getData(
+  function (similarDatas) {
+    similarDatas.forEach(function (similarData) {
+
+      const marker = L.marker(
+        {
+          lat: similarData.location.lat,
+          lng: similarData.location.lng,
+        },
+        {
+          icon: pinMarker,
+        },
+      );
+      marker
+        .addTo(map)
+        .bindPopup(getBaloonContent(similarData));
+
+    });
+  },
+  function (message) { showErrorAlert(message) },
+
+);
+
+
+const setUserFormSubmit = function (onSuccess) {
+  mainForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    sendData(
+      function () {
+        mainForm.reset();
+        onSuccess();
+        showSuccessAlert();
+      },
+      () => {
+        showErrorAlert();
+      },
+      new FormData(evt.target),
+    );
+  });
+};
+
+const userFormResetHandler = function (handler) {
+  mainForm.addEventListener('reset', function () {
+    resetMapFilters();
+    handler();
+  })
+};
 
 
 
-const similarDatas = generateHomes(3);
 
 
-similarDatas.forEach((similarData) => {
-
-  const marker = L.marker(
-    {
-      lat: similarData.location.x,
-      lng: similarData.location.y,
-    },
-    {
-      icon: pinMarker,
-    },
-  );
-  marker
-    .addTo(map)
-    .bindPopup(getBaloonContent(similarData));
-
-});
-
-
-
-
+export {
+  setUserFormSubmit,
+  userFormResetHandler,
+  MAP_DEFAULT,
+  mainMarker,
+  map,
+  mainForm,
+  adressPosition
+};
 
