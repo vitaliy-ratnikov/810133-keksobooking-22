@@ -99,7 +99,7 @@ const renderSimilarList = function (adverts) {
         i++;
       }
     }
-    return isType && isRooms && isGuest && isFeature && isPrice
+    return isType && isRooms && isGuest && isFeature && isPrice;
   };
 
 
