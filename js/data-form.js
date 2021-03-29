@@ -1,5 +1,5 @@
 import { PLACES_PRICE } from './data.js';
-import { mainMarker, map, MAP_DEFAULT, mainForm, adressPosition } from './map.js';
+import { mainMarker, map, MAP_DEFAULT, mainForm, MAP_ZOOM, adressPosition } from './map.js';
 import { sendData } from './api.js';
 
 const placesType = document.querySelector('#type');
@@ -9,17 +9,14 @@ const timeCheckOut = document.querySelector('#timeout');
 const placeDescription = document.querySelector('#title');
 const roomNumber = document.querySelector('#room_number');
 const guestNumber = document.querySelector('#capacity');
-
 const resetButtonSuccess = document.querySelector('.ad-form__reset');
-
-const mainSendUrl = 'https://22.javascript.pages.academy/keksobooking';
 const mainPart = document.querySelector('main');
 
 const guestRoomCapacity = {
-  1: ['1'],
-  2: ['1', '2'],
-  3: ['1', '2', '3'],
-  100: ['0'],
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0],
 };
 
 const MIN_TITLE_LENGTH = 30;
@@ -46,7 +43,7 @@ timeCheckIn.addEventListener('change', function () {
 });
 
 
-placeDescription.addEventListener('change', function () {
+placeDescription.addEventListener('input', function () {
   const inputLength = this.value.length;
   placeDescription.setCustomValidity('');
 
@@ -66,7 +63,7 @@ guestNumber.addEventListener('change', function () {
 
   guestNumber.setCustomValidity('');
 
-  if (!guestRoomCapacity[roomNumber.value].includes(setUserChoice)) {
+  if (!guestRoomCapacity[roomNumber.value].includes(+setUserChoice)) {
     guestNumber.setCustomValidity('Количество комнат ограничено! Количество гостей не может быть больше количества комнат.');
   }
   guestNumber.reportValidity();
@@ -78,7 +75,7 @@ roomNumber.addEventListener('change', function () {
 
   roomNumber.setCustomValidity('');
 
-  if (!guestRoomCapacity[setUserChoice].includes(guestNumber.value)) {
+  if (!guestRoomCapacity[setUserChoice].includes(+guestNumber.value)) {
     roomNumber.setCustomValidity('Количество комнат ограничено! Количество гостей не может быть больше количества комнат.');
   }
   roomNumber.reportValidity();
@@ -110,12 +107,14 @@ const resetFunction = function () {
   mainForm.reset();
   mainMarker.setLatLng({ lat: MAP_DEFAULT.lat, lng: MAP_DEFAULT.lng });
   map.closePopup();
-  adressPosition.value = `${map._lastCenter.lat} и ${map._lastCenter.lng}`;
+  map.setView([MAP_DEFAULT.lat, MAP_DEFAULT.lng], MAP_ZOOM);
+  adressPosition.value = `${MAP_DEFAULT.lat} и ${MAP_DEFAULT.lng}`;
 };
 
 
 
-resetButtonSuccess.addEventListener('click', function () {
+resetButtonSuccess.addEventListener('click', function (event) {
+  event.preventDefault();
   resetFunction();
 });
 
@@ -154,7 +153,6 @@ const setUserFormSubmit = function (onSuccess, onFail) {
     evt.preventDefault();
 
     sendData(
-      mainSendUrl,
       () => onSuccess(resetFunction()),
       () => onFail(),
       new FormData(evt.target),
