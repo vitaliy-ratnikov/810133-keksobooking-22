@@ -1,15 +1,11 @@
-import { getBaloonContent } from './data.js';
-import { getData, sendData } from './api.js';
+/* global L:readonly */
+import { sendData } from './api.js';
 import { showErrorAlert, showSuccessAlert } from './alertError.js';
-import { resetMapFilters } from './filter.js';
+import { resetMapFilters, mapFilters, pins } from './filter.js';
 
-let L = window.L;
 const mainForm = document.querySelector('.ad-form');
 const formElements = mainForm.querySelectorAll('fieldset');
-
-const formFilter = document.querySelector('.map__filters');
-const filterFeatures = formFilter.querySelector('fieldset');
-
+const filterFeatures = mapFilters.querySelector('fieldset');
 const adressPosition = document.querySelector('#address');
 
 const MAP_ZOOM = 12;
@@ -18,13 +14,15 @@ const MAP_DEFAULT = {
   lng: 139.839478,
 };
 
+
+
 mainForm.classList.add('ad-form--disabled');
 for (let formElement of formElements) {
   formElement.setAttribute('disabled', 'disabled');
 }
-formFilter.classList.add('ad-form--disabled');
+mapFilters.classList.add('ad-form--disabled');
 filterFeatures.setAttribute('disabled', 'disabled');
-const mapSelectForms = formFilter.querySelectorAll('select');
+const mapSelectForms = mapFilters.querySelectorAll('select');
 for (let mapSelectForm of mapSelectForms) {
   mapSelectForm.setAttribute('disabled', 'disabled');
 }
@@ -38,7 +36,7 @@ const map = L.map('map-canvas')
       formElement.removeAttribute('disabled', 'disabled');
     }
 
-    formFilter.classList.remove('ad-form--disabled');
+    mapFilters.classList.remove('ad-form--disabled');
     filterFeatures.removeAttribute('disabled', 'disabled');
     for (const mapSelectForm of mapSelectForms) {
       mapSelectForm.removeAttribute('disabled', 'disabled');
@@ -88,28 +86,7 @@ mainMarker.on('moveend', function () {
   adressPosition.value = `${x} и ${y}`;
 });
 
-getData(
-  function (similarDatas) {
-    similarDatas.forEach(function (similarData) {
-
-      const marker = L.marker(
-        {
-          lat: similarData.location.lat,
-          lng: similarData.location.lng,
-        },
-        {
-          icon: pinMarker,
-        },
-      );
-      marker
-        .addTo(map)
-        .bindPopup(getBaloonContent(similarData));
-
-    });
-  },
-  function (message) { showErrorAlert(message) },
-
-);
+pins.addTo(map);
 
 
 const setUserFormSubmit = function (onSuccess) {
@@ -141,6 +118,8 @@ const userFormResetHandler = function (handler) {
 
 
 
+
+
 export {
   setUserFormSubmit,
   userFormResetHandler,
@@ -148,6 +127,8 @@ export {
   mainMarker,
   map,
   mainForm,
-  adressPosition
+  adressPosition,
+  MAP_ZOOM,
+  pinMarker
 };
 
