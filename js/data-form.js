@@ -113,8 +113,8 @@ const resetFunction = function () {
 
 
 
-resetButtonSuccess.addEventListener('click', function (event) {
-  event.preventDefault();
+resetButtonSuccess.addEventListener('click', function (evt) {
+  evt.preventDefault();
   resetFunction();
 });
 
