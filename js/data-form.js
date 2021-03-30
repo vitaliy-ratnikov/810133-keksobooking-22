@@ -2,16 +2,6 @@ import { PlacesPrices } from './data.js';
 import { mainMarker, map, MAP_DEFAULT, mainForm, MAP_ZOOM, adressPosition } from './map.js';
 import { sendData } from './api.js';
 
-const placesType = document.querySelector('#type');
-const placesPrice = document.querySelector('#price');
-const timeCheckIn = document.querySelector('#timein');
-const timeCheckOut = document.querySelector('#timeout');
-const placeDescription = document.querySelector('#title');
-const roomNumber = document.querySelector('#room_number');
-const guestNumber = document.querySelector('#capacity');
-const resetButtonSuccess = document.querySelector('.ad-form__reset');
-const mainPart = document.querySelector('main');
-
 const guestRoomCapacity = {
   1: [1],
   2: [1, 2],
@@ -21,6 +11,16 @@ const guestRoomCapacity = {
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
+
+const placesType = document.querySelector('#type');
+const placesPrice = document.querySelector('#price');
+const timeCheckIn = document.querySelector('#timein');
+const timeCheckOut = document.querySelector('#timeout');
+const placeDescription = document.querySelector('#title');
+const roomNumber = document.querySelector('#room_number');
+const guestNumber = document.querySelector('#capacity');
+const resetButtonSuccess = document.querySelector('.ad-form__reset');
+const mainPart = document.querySelector('main');
 
 
 placesType.addEventListener('change', function () {
