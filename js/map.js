@@ -2,19 +2,16 @@
 import { sendData } from './api.js';
 import { showErrorAlert, showSuccessAlert } from './alert-error.js';
 import { resetMapFilters, mapFilters, pins } from './filter.js';
-
-const mainForm = document.querySelector('.ad-form');
-const formElements = mainForm.querySelectorAll('fieldset');
-const filterFeatures = mapFilters.querySelector('fieldset');
-const adressPosition = document.querySelector('#address');
-
 const MAP_ZOOM = 12;
 const MAP_DEFAULT = {
   lat: 35.652832,
   lng: 139.839478,
 };
 
-
+const mainForm = document.querySelector('.ad-form');
+const formElements = mainForm.querySelectorAll('fieldset');
+const filterFeatures = mapFilters.querySelector('fieldset');
+const adressPosition = document.querySelector('#address');
 
 mainForm.classList.add('ad-form--disabled');
 for (let formElement of formElements) {
@@ -107,10 +104,10 @@ const setUserFormSubmit = function (onSuccess) {
   });
 };
 
-const userFormReset = function (handler) {
+const userFormReset = function (onReset) {
   mainForm.addEventListener('reset', function () {
     resetMapFilters();
-    handler();
+    onReset();
   })
 };
 
