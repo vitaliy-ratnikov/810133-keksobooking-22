@@ -5,12 +5,6 @@ import { getData } from './api.js';
 import { pinMarker } from './map.js';
 import { getBaloonContent } from './data.js';
 
-
-const mapFilters = document.querySelector('.map__filters');
-const housingType = mapFilters.querySelector('#housing-type');
-const housingRooms = mapFilters.querySelector('#housing-rooms');
-const housingGuests = mapFilters.querySelector('#housing-guests');
-const housingPrice = mapFilters.querySelector('#housing-price');
 const ANY = 'any';
 const SIMILAR_ADVERT_COUNT = 10;
 const RERENDER_DELAY = 500;
@@ -19,6 +13,11 @@ const priceValues = {
   FINAL: 50000,
 };
 
+const mapFilters = document.querySelector('.map__filters');
+const housingType = mapFilters.querySelector('#housing-type');
+const housingRooms = mapFilters.querySelector('#housing-rooms');
+const housingGuests = mapFilters.querySelector('#housing-guests');
+const housingPrice = mapFilters.querySelector('#housing-price');
 
 const pins = L.layerGroup([]);
 
