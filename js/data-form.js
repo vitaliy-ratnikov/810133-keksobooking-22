@@ -1,4 +1,4 @@
-import { PLACES_PRICE } from './data.js';
+import { PlacesPrices } from './data.js';
 import { mainMarker, map, MAP_DEFAULT, mainForm, MAP_ZOOM, adressPosition } from './map.js';
 import { sendData } from './api.js';
 
@@ -24,8 +24,8 @@ const MAX_TITLE_LENGTH = 100;
 
 
 placesType.addEventListener('change', function () {
-  placesPrice.placeholder = PLACES_PRICE[placesType.value];
-  placesPrice.min = PLACES_PRICE[placesType.value];
+  placesPrice.placeholder = PlacesPrices[placesType.value];
+  placesPrice.min = PlacesPrices[placesType.value];
 
 });
 

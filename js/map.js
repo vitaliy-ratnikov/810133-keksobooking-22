@@ -1,6 +1,6 @@
 /* global L:readonly */
 import { sendData } from './api.js';
-import { showErrorAlert, showSuccessAlert } from './alertError.js';
+import { showErrorAlert, showSuccessAlert } from './alert-error.js';
 import { resetMapFilters, mapFilters, pins } from './filter.js';
 
 const mainForm = document.querySelector('.ad-form');
@@ -107,7 +107,7 @@ const setUserFormSubmit = function (onSuccess) {
   });
 };
 
-const userFormResetHandler = function (handler) {
+const userFormReset = function (handler) {
   mainForm.addEventListener('reset', function () {
     resetMapFilters();
     handler();
@@ -122,7 +122,7 @@ const userFormResetHandler = function (handler) {
 
 export {
   setUserFormSubmit,
-  userFormResetHandler,
+  userFormReset,
   MAP_DEFAULT,
   mainMarker,
   map,

@@ -1,4 +1,4 @@
-import { TYPES_HOUSES } from './data.js';
+import { TypesHouses } from './data.js';
 
 
 const getBaloonContent = function (offerData) {
@@ -8,7 +8,7 @@ const getBaloonContent = function (offerData) {
   cardElement.querySelector('.popup__title').textContent = offerData.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = offerData.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = `${offerData.offer.price} Р/ночь`;
-  cardElement.querySelector('.popup__type').textContent = TYPES_HOUSES[offerData.offer.type];
+  cardElement.querySelector('.popup__type').textContent = TypesHouses[offerData.offer.type];
   cardElement.querySelector('.popup__text--capacity').textContent = `${offerData.offer.rooms} комнаты для ${offerData.offer.guests} гостей.`;
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${offerData.offer.checkin}, выезд до ${offerData.offer.checkout}.`;
   cardElement.querySelector('.popup__avatar').src = offerData.autor.avatar;

@@ -1,4 +1,4 @@
-const PLACES_PRICE =
+const PlacesPrices =
 {
   'bungalow': 0,
   'flat': 1000,
@@ -6,7 +6,7 @@ const PLACES_PRICE =
   'palace': 10000,
 };
 
-const TYPES_HOUSES = {
+const TypesHouses = {
   'flat': 'Квартира',
   'bungalo': 'Бунгало',
   'house': 'Дом',
@@ -22,7 +22,7 @@ const getBaloonContent = function (offerData) {
   cardElement.querySelector('.popup__title').textContent = offerData.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = offerData.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = `${offerData.offer.price} Р/ночь`;
-  cardElement.querySelector('.popup__type').textContent = TYPES_HOUSES[offerData.offer.type];
+  cardElement.querySelector('.popup__type').textContent = TypesHouses[offerData.offer.type];
   cardElement.querySelector('.popup__text--capacity').textContent = `${offerData.offer.rooms} комнаты для ${offerData.offer.guests} гостей.`;
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${offerData.offer.checkin}, выезд до ${offerData.offer.checkout}.`;
   cardElement.querySelector('.popup__avatar').src = offerData.author.avatar;
@@ -58,4 +58,4 @@ const getBaloonContent = function (offerData) {
 };
 
 
-export { TYPES_HOUSES, PLACES_PRICE, getBaloonContent };
+export { TypesHouses, PlacesPrices, getBaloonContent };

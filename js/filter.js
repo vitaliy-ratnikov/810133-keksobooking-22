@@ -1,6 +1,6 @@
 /* global L:readonly */
 /* global _:readonly */
-import { showErrorAlert } from './alertError.js';
+import { showErrorAlert } from './alert-error.js';
 import { getData } from './api.js';
 import { pinMarker } from './map.js';
 import { getBaloonContent } from './data.js';
